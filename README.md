@@ -105,3 +105,46 @@ flatten(arr)
 //expect export  图2结果
 ```
 
+```js
+
+//方法2
+let arr = [
+    {
+        "orderId":1976,
+        "dataList":{
+            "orderProductId":2833,
+            "deliverQuantity":20
+        }
+    },
+    {
+        "orderId":2358,
+        "dataList":{
+            "orderProductId":3284,
+            "deliverQuantity":30
+        }
+    },
+    {
+        "orderId":2358,
+        "dataList":{
+            "orderProductId":3285,
+            "deliverQuantity":40
+        }
+    }
+]
+let newArr = [],
+    data = {};
+arr.map(value => {
+    let first = value.orderId;
+    if (!data[first]) {
+        data[first] = [];
+    }
+    data[first].push(value.dataList);
+});
+for (let i in data) {
+    let obj = { orderId: "", dataList: [] };
+    obj.orderId = i;
+    obj.dataList = data[i];
+    newArr.push(obj);
+}
+```
+
