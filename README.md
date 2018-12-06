@@ -57,23 +57,6 @@
 代码如下
 
 ```js
-function flatten(list) {
-    list.forEach((item, index) => {
-        if (Array.isArray(item.dataList)) {
-            item.dataList.forEach((v) => {
-                list.push({
-                    orderId: item.orderId,
-                    dataList:{
-                        orderProductId: v.orderProductId, 
-                        deliverQuantity: v.deliverQuantity
-                    }
-                })
-            })
-            list.splice(index, 1)
-        }
-    })
-    return list
-}
 let arr = [
     {
         "orderId":1976,
@@ -98,39 +81,6 @@ let arr = [
     }
 ]
 
-
-
-flatten(arr)
-
-//expect export  图2结果
-```
-
-```js
-
-//方法2
-let arr = [
-    {
-        "orderId":1976,
-        "dataList":{
-            "orderProductId":2833,
-            "deliverQuantity":20
-        }
-    },
-    {
-        "orderId":2358,
-        "dataList":{
-            "orderProductId":3284,
-            "deliverQuantity":30
-        }
-    },
-    {
-        "orderId":2358,
-        "dataList":{
-            "orderProductId":3285,
-            "deliverQuantity":40
-        }
-    }
-]
 let newArr = [],
     data = {};
 arr.map(value => {
@@ -140,11 +90,14 @@ arr.map(value => {
     }
     data[first].push(value.dataList);
 });
-for (let i in data) {
-    let obj = { orderId: "", dataList: [] };
-    obj.orderId = i;
-    obj.dataList = data[i];
+Object.keys(data).forEach((orderId)=>{
+    let obj = {orderId: "", dataList: []};
+    obj.orderId = orderId;
+    obj.dataList = data[orderId];
     newArr.push(obj);
-}
+})
+
+console.log(newArr)
+//expect export  图2结果
 ```
 
